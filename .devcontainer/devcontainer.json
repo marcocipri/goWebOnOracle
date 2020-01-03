@@ -1,0 +1,38 @@
+{
+	// change in order to display the project name on the vscode Explorer
+	"name": "Go-Oracle",
+	"dockerFile": "Dockerfile",
+    
+
+	// Specifies a list of ports the container should publish
+	// to change in order to avoid ports conflicts
+	"appPort": [9001],
+	"workspaceMount": "source=${localWorkspaceFolder}/go,target=/root/go/,type=bind,consistency=delegated",
+	"workspaceFolder": "/root/go/",
+	"runArgs": [
+		// Uncomment the next line to run as root instead. Linux users, 
+		// update Dockerfile with your user's UID/GID if not 1000 when
+		// using the default "vscode" user.
+		// "-u", "root",
+		// change in order to display the project name on the vscode ""Remote Console""
+		"--name", "Go-Web-tutorial",
+		"--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"
+	],
+
+	// Use 'settings' to set *default* container specific settings.json values on container create. 
+	// You can edit these settings after create using File > Preferences > Settings > Remote.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/zsh",
+		"go.gopath": "/root/go/",
+		"go.inferGopath": true,
+		"go.useLanguageServer": true
+	},
+
+	// Uncomment the next line to run commands after the container is created.
+	// Loads the git project
+	"postCreateCommand": "go get github.com/shijuvar/go-web",
+
+	"extensions": [
+		"ms-vscode.go"
+	]
+}
